@@ -18,6 +18,8 @@ public class UnitStat
     public float health;
     public float attackSpeed;
     public float attackDamage;
+    public float attackRange;
+    public float aggroRange;
     public float moveSpeed;
     public float armor;
     public float money;
