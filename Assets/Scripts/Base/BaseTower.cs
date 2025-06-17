@@ -8,13 +8,18 @@ public class BaseTower : MonoBehaviour, IHitable
     }
     public void Die()
     {
-        
+
+    }
+    protected void Attack()
+    {
+
     }
 }
 
 [System.Serializable]
 public class TowerStat
 {
+    [SerializeField] private Projectile prefab;
     public float maxHealth;
     public float health;
     public float range;

@@ -29,12 +29,16 @@ public class Player : BaseUnit
         {
             velocity.y += gravityValue * Time.deltaTime;
         }
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            
+        }
         SetAnimatorParameter();
     }
     void Move()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
+        float horizontalInput = Input.GetAxisRaw("Horizontal");
+        float verticalInput = Input.GetAxisRaw("Vertical");
 
         Vector3 movementInput = Quaternion.Euler(0, ThirdPersonCamera.Instance.transform.eulerAngles.y, 0) * new Vector3(horizontalInput, 0, verticalInput);
         Vector3 movementDirection = movementInput.normalized;

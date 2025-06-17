@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Castle
+  - enemyBug
   layers:
   - Default
   - TransparentFX
@@ -14,11 +16,11 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Base
   - Ground
   - Path
   - Bridge
-  - 
+  - Obstacle
   - 
   - 
   - 

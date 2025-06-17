@@ -7,54 +7,87 @@ using UnityEngine.AI;
 public class BaseEnemy : BaseUnit
 {
     [SerializeField] private NavMeshAgent agent;
-    [SerializeField] private List<Waypoint> waypoints;
+    private EnemyWaypoints enemyWaypoints;
     private float offset = 0.1f;
     private int waypointIndex = 0;
     private int lastWaypointIndex;
-    private Transform currentWayPoint => waypoints[waypointIndex].transform;
+    private Transform currentWayPoint => enemyWaypoints.waypoints[waypointIndex].transform;
     private bool hasReachedLastWayPoint => waypointIndex >= lastWaypointIndex;
-    private SphereCollider _collider;
-    [SerializeField] private SphereCollider aggroCollider;
     private Transform target = null;
+    private List<Transform> targetList = new List<Transform>();
+    private bool isAttacking = false;
+    private bool isHit = false;
+    private bool isDead = false;
     private enum EnemyState
     {
-        WALKING, ATTACKING
+        WALKING, AGGRO, ATTACKING
     }
     private EnemyState enemyState;
     void Start()
     {
-        _collider = GetComponent<SphereCollider>();
+        
     }
     void Update()
     {
+        // print(hasReachedWaypoint() + " " + waypointIndex);
         if (enemyState == EnemyState.WALKING)
         {
-            if (target == null && hasReachedWaypoint()) GoToNextWaypoint();
-            else if (target != null && IsInAttackRange()) enemyState = EnemyState.ATTACKING;
+            if (!hasTarget())
+            {
+                enemyState = EnemyState.AGGRO;
+                Aggro();
+            }
+            if (hasReachedWaypoint()) GoToNextWaypoint();
+        }
+        else if (enemyState == EnemyState.AGGRO)
+        {
+            if (hasTarget())
+            {
+                enemyState = EnemyState.WALKING;
+            }
+            else if (IsInAttackRange())
+            {
+                agent.isStopped = true;
+                enemyState = EnemyState.ATTACKING;
+            }
         }
         else
         {
-            if (target != null)
+            if (hasTarget())
             {
-                Attack();
+                agent.isStopped = false;
+                enemyState = EnemyState.WALKING;
+                ContinueWaypoint();
             }
-            else enemyState = EnemyState.WALKING;
+            else if (!IsInAttackRange())
+            {
+                agent.isStopped = false;
+                enemyState = EnemyState.AGGRO;
+                Aggro();
+            }
+            else if (!isAttacking) Attack();
         }
     }
     public override void Die()
     {
-
+        PoolManager.Instance.Despawn(this);
     }
-    public virtual void Attack()
+    protected virtual void Attack()
     {
-
+        isAttacking = true;
+        StartCoroutine(AttackCooldown());
+    }
+    private IEnumerator AttackCooldown()
+    {
+        yield return new WaitForSeconds(1f / stat.attackSpeed);
+        isAttacking = false;
     }
     private void GoToNextWaypoint()
     {
         if (!hasReachedLastWayPoint)
         {
             waypointIndex++;
-            agent.SetDestination(currentWayPoint.transform.position);
+            ContinueWaypoint();
         }
         else
         {
@@ -62,25 +95,44 @@ public class BaseEnemy : BaseUnit
             LevelManager.Instance.DecreaseLives(stat.lives);
         }
     }
+    public void StartRunningWaypoints()
+    {
+        agent.SetDestination(currentWayPoint.position);
+        lastWaypointIndex = enemyWaypoints.waypoints.Count - 1;
+    }
+    private void ContinueWaypoint()
+    {
+        agent.SetDestination(currentWayPoint.position);
+    }
     private bool hasReachedWaypoint()
     {
-        return Vector3.Distance(currentWayPoint.transform.position, transform.position) <= offset;
+        Vector3 cur = new Vector3(currentWayPoint.position.x, 0, currentWayPoint.position.z);
+        Vector3 tar = new Vector3(transform.position.x, 0, transform.position.z);
+        return Vector3.Distance(cur, tar) <= offset;
     }
     private bool IsInAttackRange()
     {
         return Vector3.Distance(transform.position, target.position) <= stat.attackRange;
     }
-    public void Aggro(Transform t)
+    public void Aggro()
     {
-        target = t;
         agent.SetDestination(target.position);
+    }
+    private bool hasTarget()
+    {
+        if (target == null && targetList.Count > 0) target = targetList[0];
+        return target == null;
+    }
+    public void SetWaypoint(EnemyWaypoints wp)
+    {
+        enemyWaypoints = wp;
     }
     public override void OnSpawn()
     {
-        _collider.enabled = true;
+        enemyState = EnemyState.WALKING;
     }
     public override void OnDespawn()
     {
-        _collider.enabled = false;
+        
     }
 }
