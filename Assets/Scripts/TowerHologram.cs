@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,8 @@ public class TowerHologram : MonoBehaviour
     [SerializeField] private LayerMask layerMask;
     private bool isValid = true;
     private List<Collider> invalidList = new List<Collider>();
+    public delegate void OnComplete(bool val);
+    public static event OnComplete onComplete;
     void Start()
     {
         ApplyFeedback();
@@ -29,7 +32,7 @@ public class TowerHologram : MonoBehaviour
     }
     public void OnTriggerEnter(Collider collider)
     {
-        print(collider.gameObject.name);
+        // print(collider.gameObject.name);
         if (collider.gameObject.layer != LayerMask.NameToLayer("Ground")) invalidList.Add(collider);
     }
     public void OnTriggerExit(Collider collider)
@@ -45,9 +48,22 @@ public class TowerHologram : MonoBehaviour
             renderer.material = material;
         }
     }
-    public void Build()
+    public IEnumerator Build(Vector3 pos)
     {
-        BaseTower baseTower = Instantiate(towerPrefab);
+        if (!isValid) yield return null;
+        else
+        {
+            yield return Instantiate(towerPrefab, pos, Quaternion.identity);
+            if (onComplete != null)
+            {
+                onComplete(true);
+            }
+            Cancel();
+        }
+
+    }
+    public void Cancel()
+    {
         Destroy(gameObject);
     }
 }

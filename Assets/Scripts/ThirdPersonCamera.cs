@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class ThirdPersonCamera : Singleton<ThirdPersonCamera>
 {
@@ -22,12 +24,15 @@ public class ThirdPersonCamera : Singleton<ThirdPersonCamera>
         if (!isBuilding && Input.GetKeyDown(KeyCode.B))
         {
             isBuilding = true;
-            hologram = Instantiate(towerHologram, transform.position + new Vector3(0, -0.01f, 0), Quaternion.identity);
+            hologram = Instantiate(towerHologram, transform.position, Quaternion.identity);
+            TowerHologram.onComplete += OnBuildComplete;
         }
         if (isBuilding && Input.GetKeyDown(KeyCode.Escape))
         {
             isBuilding = false;
+            hologram.Cancel();
             hologram = null;
+            TowerHologram.onComplete -= OnBuildComplete;
         }
         RaycastHit raycastHit;
         if (Physics.Raycast(transform.position, direc, out raycastHit, Mathf.Infinity, layerMask))
@@ -36,8 +41,21 @@ public class ThirdPersonCamera : Singleton<ThirdPersonCamera>
             // print(mousePos.x + " " + mousePos.y + " " + mousePos.z);
             if (isBuilding)
             {
-                hologram.transform.position = raycastHit.point + new Vector3(0, -0.01f, 0);
+                hologram.transform.position = raycastHit.point;
+                if (Input.GetMouseButtonDown(0))
+                {
+                    StartCoroutine(hologram.Build(raycastHit.point));
+                }
             }
+        }
+    }
+    private void OnBuildComplete(bool valid)
+    {
+        if (valid)
+        {
+            isBuilding = false;
+            hologram = null;
+            TowerHologram.onComplete -= OnBuildComplete;
         }
     }
 }
