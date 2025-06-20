@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6342988009956864985}
   - component: {fileID: 6451675934761907129}
   - component: {fileID: 477522754640603936}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 140614040525171745}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 32.159813, y: 2.38, z: 9.14}
+  m_LocalPosition: {x: 32.159813, y: 0, z: 9.14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -120,7 +120,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 140614040525171745}
   m_Enabled: 1
   m_AgentTypeID: -1372625422
-  m_Radius: 0.5
+  m_Radius: 1
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -146,8 +146,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stat:
-    maxHealth: 0
-    health: 0
+    maxHealth: 10
+    health: 10
     attackSpeed: 0
     attackDamage: 0
     attackRange: 0
@@ -156,7 +156,9 @@ MonoBehaviour:
     armor: 0
     money: 0
     lives: 0
+    eTeam: 2
   agent: {fileID: 6342988009956864985}
+  animator: {fileID: 0}
 --- !u!54 &477522754640603936
 Rigidbody:
   m_ObjectHideFlags: 0

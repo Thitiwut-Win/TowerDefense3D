@@ -1,24 +1,46 @@
+using System.Collections;
 using UnityEngine;
 
 public class RotateToTarget : MonoBehaviour
 {
-    private Transform target;
+    [SerializeField] private BaseEnemy target;
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip audioClip;
     public float turnSpeed;
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
     void Update()
     {
-        if (target != null)
+        if (hasTarget())
         {
-            Vector3 targetDirection = target.position - transform.position;
+            Vector3 targetDirection = target.transform.position - transform.position;
+            targetDirection.y = 0.5f - transform.position.y;
             Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, turnSpeed * Time.deltaTime, 0);
             transform.rotation = Quaternion.LookRotation(newDirection);
         }
     }
-    public void SetTarget(Transform transform)
+    public void SetTarget(BaseEnemy baseEnemy)
     {
-        target = transform;
+        target = baseEnemy;
     }
     public bool hasTarget()
     {
+        if (target != null && target.IsDead()) target = null;
         return target != null;
+    }
+    public void Attack(Projectile prefab)
+    {
+        if (hasTarget())
+        {
+            Projectile projectile = PoolManager.Instance.Spawn<Projectile>(prefab.name, transform.position + transform.forward * 0.5f, Quaternion.identity);
+            projectile.SetTarget(target.transform);
+            projectile.PostSpawn();
+            audioSource.volume = LevelManager.Instance.GetVolume()/100f;
+            audioSource.clip = audioClip;
+            audioSource.pitch = Random.Range(1f, 3f);
+            audioSource.Play();
+        }
     }
 }

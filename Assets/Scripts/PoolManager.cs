@@ -52,6 +52,7 @@ public class PoolManager : Singleton<PoolManager>
     public T Spawn<T>(string itemName, Vector3 position, Quaternion rotation) where T : PoolableObject
     {
         T item = Spawn<T>(itemName);
+        // print(item);
         if (item == null) return item;
         item.transform.position = position;
         item.transform.rotation = rotation;

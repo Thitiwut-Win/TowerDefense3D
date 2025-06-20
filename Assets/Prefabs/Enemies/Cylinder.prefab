@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5189042008790052627}
   - component: {fileID: 1030350339478208066}
   - component: {fileID: -2510315391878333954}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 3929278301417182761}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 32.839596, y: 2.0057766, z: -5.2420707}
+  m_LocalPosition: {x: 32.839596, y: 0, z: -5.2420707}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -126,8 +126,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stat:
-    maxHealth: 0
-    health: 0
+    maxHealth: 10
+    health: 10
     attackSpeed: 0
     attackDamage: 0
     attackRange: 0
@@ -136,7 +136,9 @@ MonoBehaviour:
     armor: 0
     money: 0
     lives: 0
+    eTeam: 2
   agent: {fileID: 1030350339478208066}
+  animator: {fileID: 0}
 --- !u!195 &1030350339478208066
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -146,7 +148,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 3929278301417182761}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 1
   m_Speed: 5
   m_Acceleration: 5
   avoidancePriority: 50

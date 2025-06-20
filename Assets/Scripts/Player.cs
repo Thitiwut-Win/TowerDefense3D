@@ -29,9 +29,9 @@ public class Player : BaseUnit
         {
             velocity.y += gravityValue * Time.deltaTime;
         }
-        if (Input.GetKeyDown(KeyCode.B))
+        if (transform.position.y < -2)
         {
-            
+            transform.position = new Vector3(30, 2, 6);
         }
         SetAnimatorParameter();
     }

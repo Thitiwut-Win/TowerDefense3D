@@ -8,9 +8,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 100000, guid: 31b5711eb7fc9e74c9b9596af3800686, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: 31b5711eb7fc9e74c9b9596af3800686, type: 3}
       propertyPath: m_Name
       value: HM_cannon_1 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 31b5711eb7fc9e74c9b9596af3800686, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 31b5711eb7fc9e74c9b9596af3800686, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: 31b5711eb7fc9e74c9b9596af3800686, type: 3}
+      propertyPath: m_Layer
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 31b5711eb7fc9e74c9b9596af3800686, type: 3}
       propertyPath: m_LocalPosition.x
@@ -83,9 +99,6 @@ MonoBehaviour:
   towerPrefab: {fileID: 3585812816725257288, guid: bf3c202187f938347b88b5e12f8cb162, type: 3}
   invalid: {fileID: 2100000, guid: 15bd28cf29b8bcb42bfd2ca90379387e, type: 2}
   valid: {fileID: 2100000, guid: fb250084e21f899459a3aebdb1e3a3d2, type: 2}
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 1024
 --- !u!65 &-7340903321064989677
 BoxCollider:
   m_ObjectHideFlags: 0

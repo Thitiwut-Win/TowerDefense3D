@@ -14,16 +14,16 @@ TagManager:
   - Water
   - UI
   - 
-  - 
-  - 
+  - Player
+  - Enemy
   - Base
   - Ground
   - Path
   - Bridge
   - Obstacle
-  - 
-  - 
-  - 
+  - TowerRange
+  - EnemyRange
+  - Hologram
   - 
   - 
   - 

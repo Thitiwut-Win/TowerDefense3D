@@ -7,7 +7,6 @@ public class TowerHologram : MonoBehaviour
     [SerializeField] private BaseTower towerPrefab;
     [SerializeField] private Material invalid;
     [SerializeField] private Material valid;
-    [SerializeField] private LayerMask layerMask;
     private bool isValid = true;
     private List<Collider> invalidList = new List<Collider>();
     public delegate void OnComplete(bool val);
@@ -54,6 +53,7 @@ public class TowerHologram : MonoBehaviour
         else
         {
             yield return Instantiate(towerPrefab, pos, Quaternion.identity);
+            LevelManager.Instance.IncreaseMoney(-towerPrefab.towerStat.cost);
             if (onComplete != null)
             {
                 onComplete(true);
