@@ -7,6 +7,7 @@ public class RotateToTarget : MonoBehaviour
     private AudioSource audioSource;
     [SerializeField] private AudioClip audioClip;
     public float turnSpeed;
+    [SerializeField] private BaseTower baseTower;
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -27,16 +28,23 @@ public class RotateToTarget : MonoBehaviour
     }
     public bool hasTarget()
     {
-        if (target != null && target.IsDead()) target = null;
+        if (target != null && target.IsDead())
+        {
+            if(baseTower.targetList.Contains(target)) baseTower.targetList.Remove(target);
+            target = null;
+        }
         return target != null;
     }
     public void Attack(Projectile prefab)
     {
         if (hasTarget())
         {
-            Projectile projectile = PoolManager.Instance.Spawn<Projectile>(prefab.name, transform.position + transform.forward * 0.5f, Quaternion.identity);
-            projectile.SetTarget(target.transform);
-            projectile.PostSpawn();
+            if (prefab != null)
+            {
+                Projectile projectile = PoolManager.Instance.Spawn<Projectile>(prefab.name, transform.position + transform.forward * 0.5f, Quaternion.identity);
+                projectile.SetTarget(target.transform);
+                projectile.PostSpawn();
+            }
             audioSource.volume = LevelManager.Instance.GetVolume()/100f;
             audioSource.clip = audioClip;
             audioSource.pitch = Random.Range(1f, 3f);

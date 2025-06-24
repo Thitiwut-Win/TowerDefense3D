@@ -40,7 +40,7 @@ public class BaseEnemy : BaseUnit
     }
     void Update()
     {
-        if (audioSource.time > 2.1f) audioSource.Stop();
+        if (audioSource.clip != null && audioSource.time > 2.1f) audioSource.Stop();
         if (enemyState == EnemyState.WALKING)
         {
             if (!hasTarget())
@@ -115,7 +115,7 @@ public class BaseEnemy : BaseUnit
             BaseTower baseTower = target.GetComponent<BaseTower>();
             baseTower.GetHit(stat.attackDamage);
         }
-        audioSource.volume = LevelManager.Instance.GetVolume()/200f;
+        audioSource.volume = LevelManager.Instance.GetVolume()/300f;
         audioSource.clip = attackAudioClip;
         audioSource.pitch = UnityEngine.Random.Range(1f, 3f);
         audioSource.time = attackSoundOffset;

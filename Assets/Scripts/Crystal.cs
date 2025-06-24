@@ -12,9 +12,10 @@ public class Crystal : MonoBehaviour
     {
         if (collider.TryGetComponent(out BaseEnemy baseEnemy))
         {
+            PopupManager.Instance.Pop("Warning : Enemy is attacking the crystal!", Color.red);
             LevelManager.Instance.DecreaseLives(baseEnemy.stat.lives);
             baseEnemy.Die();
-            audioSource.volume = LevelManager.Instance.GetVolume()/200f;
+            audioSource.volume = LevelManager.Instance.GetVolume()/300f;
             audioSource.clip = audioClip;
             audioSource.Play();
         }

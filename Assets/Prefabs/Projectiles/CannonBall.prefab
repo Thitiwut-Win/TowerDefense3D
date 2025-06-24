@@ -28,8 +28,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.50000006, y: 0.50000006, z: -0.5, w: 0.5}
   m_LocalPosition: {x: 0.004, y: -0.004999995, z: -0.004000008}
-  m_LocalScale: {x: 0.12102878, y: 0.12102873, z: 0.12102873}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 9089017909260048031}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
@@ -4793,7 +4793,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 82c09a66d8e49fb4aa4c4c038f7d94c7, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4874,8 +4873,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.50000006, y: 0.50000006, z: -0.5, w: 0.5}
   m_LocalPosition: {x: 0.004, y: -0.004999995, z: -0.004000008}
-  m_LocalScale: {x: 0.12102878, y: 0.12102873, z: 0.12102873}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 9089017909260048031}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
@@ -9639,7 +9638,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 1db238f484fcb6540ac8790ca96d838b, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9846,3 +9844,4 @@ MonoBehaviour:
   speed: 8
   damage: 0
   eTeam: 1
+  particle: {fileID: 9142331709312313615, guid: 9620465fd8c3fbc49a48c588c93b6fb8, type: 3}

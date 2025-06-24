@@ -49,10 +49,18 @@ public class TowerHologram : MonoBehaviour
     }
     public IEnumerator Build(Vector3 pos)
     {
-        if (!isValid) yield return null;
+        if (!isValid)
+        {
+            PopupManager.Instance.Pop("Invalid placement");
+            yield return null;
+        }
+        else if(LevelManager.Instance.GetMoney() < towerPrefab.towerStat.cost)
+        {
+            PopupManager.Instance.Pop("Not enough money to build");
+        }
         else
         {
-            yield return Instantiate(towerPrefab, pos, Quaternion.identity);
+            TowerBuilder.Instance.Build(towerPrefab, pos);
             LevelManager.Instance.IncreaseMoney(-towerPrefab.towerStat.cost);
             if (onComplete != null)
             {
@@ -60,7 +68,6 @@ public class TowerHologram : MonoBehaviour
             }
             Cancel();
         }
-
     }
     public void Cancel()
     {

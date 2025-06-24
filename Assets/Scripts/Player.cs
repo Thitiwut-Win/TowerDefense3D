@@ -18,6 +18,7 @@ public class Player : BaseUnit
     [SerializeField] private LayerMask isGround;
     void Update()
     {
+        if(LevelManager.Instance.IsPausing()) return;
         Move();
         GroundCheck();
         if (isGrounded)

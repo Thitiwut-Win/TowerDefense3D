@@ -8,6 +8,7 @@ public class Projectile : PoolableObject
     public float damage;
     public ETeam eTeam;
     protected Rigidbody rb;
+    [SerializeField] private Particle particle;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -40,6 +41,7 @@ public class Projectile : PoolableObject
         if (baseUnit != null && eTeam != baseUnit.stat.eTeam)
         {
             baseUnit.GetHit(damage);
+            PoolManager.Instance.Spawn<Particle>(particle.name, transform.position, transform.rotation);
             PoolManager.Instance.Despawn(this);
         }
     }

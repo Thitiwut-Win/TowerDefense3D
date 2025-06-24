@@ -87,6 +87,18 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 31b5711eb7fc9e74c9b9596af3800686, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 31b5711eb7fc9e74c9b9596af3800686, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 31b5711eb7fc9e74c9b9596af3800686, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 31b5711eb7fc9e74c9b9596af3800686, type: 3}
       propertyPath: m_LocalPosition.x
       value: 35.440365
       objectReference: {fileID: 0}
@@ -125,6 +137,10 @@ PrefabInstance:
     - target: {fileID: 400002, guid: 31b5711eb7fc9e74c9b9596af3800686, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 31b5711eb7fc9e74c9b9596af3800686, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: 31b5711eb7fc9e74c9b9596af3800686, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -241,7 +257,7 @@ Rigidbody:
     serializedVersion: 2
     m_Bits: 0
   m_ImplicitCom: 1
-  m_ImplicitTensor: 1
+  m_ImplicitTensor: 0
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -264,7 +280,7 @@ MonoBehaviour:
     maxHealth: 10
     health: 10
     range: 4.5
-    attackSpeed: 0.2
+    attackSpeed: 0.4
     attackDamage: 1
     cost: 100
     eTeam: 1
@@ -283,7 +299,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -388,6 +404,7 @@ MonoBehaviour:
   target: {fileID: 0}
   audioClip: {fileID: 8300000, guid: 5dea08ef5f83d7046bacbc4f4569d11d, type: 3}
   turnSpeed: 6
+  baseTower: {fileID: 0}
 --- !u!82 &1775017809395109171
 AudioSource:
   m_ObjectHideFlags: 0

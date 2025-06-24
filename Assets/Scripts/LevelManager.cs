@@ -6,12 +6,14 @@ using UnityEngine.AI;
 
 public class LevelManager : Singleton<LevelManager>
 {
+    [SerializeField] private TowerHologram selectedTower;
     [SerializeField] private List<Wave> waves;
     [SerializeField] public List<EnemyWaypoints> pathWaypoints;
     private int waveIndex = 0;
     public bool isLoop;
-    private bool isAuto;
+    private bool isAuto = false;
     private bool isPaused = false;
+    private bool isSpawning = false;
     private int lives = 100;
     private int money = 500;
     private int volume = 100;
@@ -21,6 +23,7 @@ public class LevelManager : Singleton<LevelManager>
     }
     private IEnumerator StartWave()
     {
+        isSpawning = true;
         Wave wave = waves[waveIndex];
         yield return new WaitForSeconds(wave.waveCountdown);
         foreach (Horde horde in wave.hordes)
@@ -31,6 +34,8 @@ public class LevelManager : Singleton<LevelManager>
         waveIndex++;
         if (waveIndex >= waves.Count && isLoop) waveIndex = 0;
         if (isAuto) StartCoroutine(StartWave());
+        isSpawning = false;
+        GameUI.Instance.EnableCall();
     }
     private IEnumerator StartHorde(Horde horde)
     {
@@ -44,6 +49,14 @@ public class LevelManager : Singleton<LevelManager>
             enemy.StartRunningWaypoints();
             yield return new WaitForSeconds(horde.spawnInterval);
         }
+    }
+    public void SetSelectedTower(TowerHologram hologram)
+    {
+        selectedTower = hologram;
+    }
+    public TowerHologram GetSelectedTower()
+    {
+        return selectedTower;
     }
     public int GetLives()
     {
@@ -70,15 +83,15 @@ public class LevelManager : Singleton<LevelManager>
     }
     public void CallWave()
     {
-        StartCoroutine(StartWave());
+        if(!isSpawning) StartCoroutine(StartWave());
     }
     public int GetVolume()
     {
         return volume;
     }
-    public void SetAuto(bool auto)
+    public void SetAuto()
     {
-        isAuto = auto;
+        isAuto = !isAuto;
     }
     public void Pause()
     {
@@ -92,8 +105,20 @@ public class LevelManager : Singleton<LevelManager>
             Time.timeScale = 1f;
         }
     }
+    public bool IsPausing()
+    {
+        return isPaused;
+    }
+    public bool IsSpawning()
+    {
+        return isSpawning;
+    }
     private void GameOver()
     {
 
+    }
+    public void Exit()
+    {
+        Application.Quit();
     }
 }

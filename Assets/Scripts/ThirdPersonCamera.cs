@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
 public class ThirdPersonCamera : Singleton<ThirdPersonCamera>
@@ -7,26 +6,44 @@ public class ThirdPersonCamera : Singleton<ThirdPersonCamera>
     new Camera camera;
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private Transform aimTarget;
-    [SerializeField] private TowerHologram towerHologram;
+    private bool isSelecting = false;
     private bool isBuilding = false;
     private TowerHologram hologram;
+    private BuildUI buildUI;
     void Start()
     {
+        buildUI = BuildUI.Instance;
+        buildUI.gameObject.SetActive(false);
         camera = GetComponent<Camera>();
     }
     void Update()
     {
+        if (LevelManager.Instance.IsPausing()) return;
         Vector3 mousePos = Input.mousePosition;
         mousePos.z = 10f;
         mousePos = camera.ScreenToWorldPoint(mousePos);
         aimTarget.position = mousePos;
         Vector3 direc = mousePos - transform.position;
-        if (!isBuilding && Input.GetKeyDown(KeyCode.B))
+        if (Input.GetKeyDown(KeyCode.P))
         {
-            isBuilding = true;
-            hologram = Instantiate(towerHologram, transform.position, Quaternion.identity);
-            TowerHologram.onComplete += OnBuildComplete;
+            isSelecting = !isSelecting;
+            if (isSelecting)
+            {
+                if (buildUI == null) buildUI = BuildUI.Instance;
+                buildUI.gameObject.SetActive(true);
+            }
+            else
+            {
+                if (buildUI == null) buildUI = BuildUI.Instance;
+                buildUI.gameObject.SetActive(false);
+            }
         }
+        if (!isBuilding && Input.GetKeyDown(KeyCode.B))
+            {
+                isBuilding = true;
+                hologram = Instantiate(LevelManager.Instance.GetSelectedTower(), transform.position, Quaternion.identity);
+                TowerHologram.onComplete += OnBuildComplete;
+            }
         if (isBuilding && Input.GetKeyDown(KeyCode.Escape))
         {
             isBuilding = false;

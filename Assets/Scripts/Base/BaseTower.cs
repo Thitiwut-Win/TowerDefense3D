@@ -9,7 +9,7 @@ public class BaseTower : MonoBehaviour, IHitable
     public List<BaseEnemy> targetList = new List<BaseEnemy>();
     protected bool isAttacking = false;
     protected bool isDead = false;
-    private AudioSource audioSource;
+    protected AudioSource audioSource;
     [SerializeField] private AudioClip audioClip;
     void Start()
     {
