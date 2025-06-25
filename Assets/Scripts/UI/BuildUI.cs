@@ -13,6 +13,7 @@ public class BuildUI : Singleton<BuildUI>
     {
         cannonTowerButton.onClick.AddListener(OnCannonTowerClicked);
         mageTowerButton.onClick.AddListener(OnMageTowerClicked);
+        // mageTowerButton.OnPointerEnter.AddListener(() => { });
     }
     private void OnCannonTowerClicked()
     {

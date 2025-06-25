@@ -15,7 +15,7 @@ public class Crystal : MonoBehaviour
             PopupManager.Instance.Pop("Warning : Enemy is attacking the crystal!", Color.red);
             LevelManager.Instance.DecreaseLives(baseEnemy.stat.lives);
             baseEnemy.Die();
-            audioSource.volume = LevelManager.Instance.GetVolume()/300f;
+            audioSource.volume = GameManager.Instance.GetVolume()/300f;
             audioSource.clip = audioClip;
             audioSource.Play();
         }

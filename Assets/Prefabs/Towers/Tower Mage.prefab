@@ -153,7 +153,7 @@ MonoBehaviour:
     maxHealth: 12
     health: 12
     range: 5
-    attackSpeed: 0.2
+    attackSpeed: 0.4
     attackDamage: 3
     cost: 200
     eTeam: 1

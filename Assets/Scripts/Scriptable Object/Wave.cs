@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Wave Info")]
 [System.Serializable]
-public class Wave
+public class Wave : ScriptableObject
 {
     public List<Horde> hordes;
     public float waveCountdown;

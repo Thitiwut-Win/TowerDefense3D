@@ -12,11 +12,10 @@ public class LevelManager : Singleton<LevelManager>
     private int waveIndex = 0;
     public bool isLoop;
     private bool isAuto = false;
-    private bool isPaused = false;
     private bool isSpawning = false;
     private int lives = 100;
     private int money = 500;
-    private int volume = 100;
+    private List<BaseEnemy> enemies = new List<BaseEnemy>();
     void Start()
     {
         Cursor.lockState = CursorLockMode.Confined;
@@ -25,6 +24,7 @@ public class LevelManager : Singleton<LevelManager>
     {
         isSpawning = true;
         Wave wave = waves[waveIndex];
+        GameUI.Instance.DisableCall();
         yield return new WaitForSeconds(wave.waveCountdown);
         foreach (Horde horde in wave.hordes)
         {
@@ -47,6 +47,8 @@ public class LevelManager : Singleton<LevelManager>
             BaseEnemy enemy = PoolManager.Instance.Spawn<BaseEnemy>(horde.enemyPrefab.name, spawnPosition, Quaternion.identity);
             enemy.SetWaypoint(pathWaypoints[horde.pathNumber]);
             enemy.StartRunningWaypoints();
+            enemy.onDead += OnEnemiesDied;
+            enemies.Add(enemy);
             yield return new WaitForSeconds(horde.spawnInterval);
         }
     }
@@ -70,55 +72,67 @@ public class LevelManager : Singleton<LevelManager>
     {
         lives -= live;
         GameUI.Instance.SetLives(Math.Max(lives, 0));
-        if (lives <= 0) GameOver();
+        if (lives <= 0) GameManager.Instance.GameOver();
     }
     public void IncreaseMoney(int mon)
     {
         money += mon;
         GameUI.Instance.SetMoney(money);
     }
-    public void SetVolume(int vol)
-    {
-        volume = vol;
-    }
     public void CallWave()
     {
-        if(!isSpawning) StartCoroutine(StartWave());
-    }
-    public int GetVolume()
-    {
-        return volume;
+        if (!isSpawning) StartCoroutine(StartWave());
     }
     public void SetAuto()
     {
         isAuto = !isAuto;
     }
-    public void Pause()
-    {
-        isPaused = !isPaused;
-        if (isPaused)
-        {
-            Time.timeScale = 0f;
-        }
-        else
-        {
-            Time.timeScale = 1f;
-        }
-    }
-    public bool IsPausing()
-    {
-        return isPaused;
-    }
     public bool IsSpawning()
     {
         return isSpawning;
     }
-    private void GameOver()
+    private void OnEnemiesDied(BaseEnemy enemy)
     {
+        enemies.Remove(enemy);
+        enemy.onDead -= OnEnemiesDied;
+    }
+    public bool IsEnemiesLeft()
+    {
+        return enemies.Count > 0;
+    }
+    #region Save & Load
+    public void Save(ref LevelSaveData data)
+    {
+        data.Lives = lives;
+        data.Money = money;
+        data.WaveIndex = waveIndex;
+    }
+    public void Load(LevelSaveData data)
+    {
+        StopAllCoroutines();
+        GameUI.Instance.EnableCall();
+        isSpawning = false;
 
+        lives = data.Lives;
+        money = data.Money;
+        waveIndex = data.WaveIndex;
+
+        GameUI.Instance.SetLives(lives);
+        GameUI.Instance.SetMoney(money);
+
+        foreach (BaseEnemy enemy in enemies)
+        {
+            if (enemy != null) PoolManager.Instance.Despawn(enemy);
+        }
+        enemies.Clear();
     }
-    public void Exit()
-    {
-        Application.Quit();
-    }
+    #endregion
+}
+
+[System.Serializable]
+public struct LevelSaveData
+{
+    public int Lives;
+    public int Money;
+    public int WaveIndex;
 }

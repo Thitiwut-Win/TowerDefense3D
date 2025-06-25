@@ -45,7 +45,7 @@ public class RotateToTarget : MonoBehaviour
                 projectile.SetTarget(target.transform);
                 projectile.PostSpawn();
             }
-            audioSource.volume = LevelManager.Instance.GetVolume()/100f;
+            audioSource.volume = GameManager.Instance.GetVolume()/100f;
             audioSource.clip = audioClip;
             audioSource.pitch = Random.Range(1f, 3f);
             audioSource.Play();

@@ -26,6 +26,8 @@ public class BaseEnemy : BaseUnit
     [SerializeField] private AudioClip getHitAudioClip;
     public float attackSoundOffset;
     public float getHitSoundOffset;
+    public delegate void OnDead(BaseEnemy baseEnemy);
+    public OnDead onDead;
     private enum EnemyState
     {
         NONE, WALKING, AGGRO, ATTACKING
@@ -88,14 +90,17 @@ public class BaseEnemy : BaseUnit
     }
     public override void GetHit(float dmg)
     {
-        isHit.isWait = true;
-        audioSource.volume = LevelManager.Instance.GetVolume()/400f;
-        audioSource.clip = getHitAudioClip;
-        audioSource.pitch = UnityEngine.Random.Range(1f, 3f);
-        audioSource.time = getHitSoundOffset;
-        audioSource.Play();
-        StartCoroutine(Cooldown(isHit));
         base.GetHit(dmg);
+        if (!isDead)
+        {
+            isHit.isWait = true;
+            audioSource.volume = GameManager.Instance.GetVolume() / 400f;
+            audioSource.clip = getHitAudioClip;
+            audioSource.pitch = UnityEngine.Random.Range(1f, 3f);
+            audioSource.time = getHitSoundOffset;
+            audioSource.Play();
+            StartCoroutine(Cooldown(isHit));
+        }
     }
     private IEnumerator Cooldown(BoolTime boolTime)
     {
@@ -106,6 +111,7 @@ public class BaseEnemy : BaseUnit
     {
         isAttacking.isWait = false;
         isDead = true;
+        if (onDead != null) onDead(this);
         PoolManager.Instance.Despawn(this);
     }
     protected virtual void Attack()
@@ -115,7 +121,7 @@ public class BaseEnemy : BaseUnit
             BaseTower baseTower = target.GetComponent<BaseTower>();
             baseTower.GetHit(stat.attackDamage);
         }
-        audioSource.volume = LevelManager.Instance.GetVolume()/300f;
+        audioSource.volume = GameManager.Instance.GetVolume()/300f;
         audioSource.clip = attackAudioClip;
         audioSource.pitch = UnityEngine.Random.Range(1f, 3f);
         audioSource.time = attackSoundOffset;

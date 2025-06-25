@@ -60,7 +60,7 @@ public class TowerHologram : MonoBehaviour
         }
         else
         {
-            TowerBuilder.Instance.Build(towerPrefab, pos);
+            TowerBuilderManager.Instance.Build(towerPrefab, pos);
             LevelManager.Instance.IncreaseMoney(-towerPrefab.towerStat.cost);
             if (onComplete != null)
             {

@@ -9842,6 +9842,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 8
-  damage: 0
+  damage: 1
   eTeam: 1
   particle: {fileID: 9142331709312313615, guid: 9620465fd8c3fbc49a48c588c93b6fb8, type: 3}

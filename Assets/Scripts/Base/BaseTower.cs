@@ -14,7 +14,7 @@ public class BaseTower : MonoBehaviour, IHitable
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        audioSource.volume = LevelManager.Instance.GetVolume()/100f;
+        audioSource.volume = GameManager.Instance.GetVolume()/100f;
         audioSource.pitch = Random.Range(1f, 3f);
         audioSource.clip = audioClip;
         audioSource.time = 0.5f;

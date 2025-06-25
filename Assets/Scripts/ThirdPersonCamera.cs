@@ -18,7 +18,7 @@ public class ThirdPersonCamera : Singleton<ThirdPersonCamera>
     }
     void Update()
     {
-        if (LevelManager.Instance.IsPausing()) return;
+        if (GameManager.Instance.IsPausing()) return;
         Vector3 mousePos = Input.mousePosition;
         mousePos.z = 10f;
         mousePos = camera.ScreenToWorldPoint(mousePos);

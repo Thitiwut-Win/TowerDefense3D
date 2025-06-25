@@ -30,11 +30,14 @@ public class GameUI : Singleton<GameUI>
         else
         {
             LevelManager.Instance.CallWave();
-            callWaveButton.gameObject.SetActive(false);
         }
     }
     public void EnableCall()
     {
         callWaveButton.gameObject.SetActive(true);
+    }
+    public void DisableCall()
+    {
+        callWaveButton.gameObject.SetActive(false);
     }
 }

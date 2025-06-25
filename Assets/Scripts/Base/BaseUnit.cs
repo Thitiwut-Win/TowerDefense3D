@@ -6,7 +6,7 @@ public abstract class BaseUnit : PoolableObject, IHitable
     public UnitStat stat;
     public virtual void GetHit(float dmg)
     {
-        stat.health -= Math.Max(dmg - stat.armor, 1);
+        if(dmg != 0)stat.health -= Math.Max(dmg - stat.armor, 1);
         if (stat.health <= 0)
         {
             Die();
