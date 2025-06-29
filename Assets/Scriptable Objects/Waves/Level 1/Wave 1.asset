@@ -18,4 +18,5 @@ MonoBehaviour:
     spawnInterval: 3
     hordeCountdown: 3
     pathNumber: 0
+    eHordeStatus: 0
   waveCountdown: 0

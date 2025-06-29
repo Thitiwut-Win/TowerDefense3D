@@ -9794,7 +9794,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   countdownTime: 3.5
-  damage: 3
+  damage: 2.5
   colliderTime: 0.8
 --- !u!1 &2860494687733436908
 GameObject:
@@ -44161,7 +44161,7 @@ Light:
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
+  m_BounceIntensity: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 2.1766e-41, y: 2.524355e-29, z: 0, w: 2.3227768e-35}
@@ -44207,6 +44207,10 @@ PrefabInstance:
     - target: {fileID: 4230614989129489144, guid: 0499433e5d088084fba572104c424047, type: 3}
       propertyPath: m_Name
       value: LightningParticle
+      objectReference: {fileID: 0}
+    - target: {fileID: 4230614989129489144, guid: 0499433e5d088084fba572104c424047, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7542255974347270254, guid: 0499433e5d088084fba572104c424047, type: 3}
       propertyPath: looping

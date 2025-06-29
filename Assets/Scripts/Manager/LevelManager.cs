@@ -16,6 +16,8 @@ public class LevelManager : Singleton<LevelManager>
     private int lives = 100;
     private int money = 500;
     private List<BaseEnemy> enemies = new List<BaseEnemy>();
+    private int numbersOfHorde = 1;
+    private int waitForHorde = 0;
     void Start()
     {
         Cursor.lockState = CursorLockMode.Confined;
@@ -24,12 +26,21 @@ public class LevelManager : Singleton<LevelManager>
     {
         isSpawning = true;
         Wave wave = waves[waveIndex];
+        GameUI.Instance.SetWave(waveIndex + 1);
         GameUI.Instance.DisableCall();
         yield return new WaitForSeconds(wave.waveCountdown);
-        foreach (Horde horde in wave.hordes)
+        for (int i = 0; i < wave.hordes.Count;)
         {
-            yield return new WaitForSeconds(horde.hordeCountdown);
-            yield return StartCoroutine(StartHorde(horde));
+            numbersOfHorde = 1;
+            waitForHorde = 0;
+            StartCoroutine(StartHorde(wave.hordes[i++]));
+            while (i < wave.hordes.Count && wave.hordes[i].eHordeStatus == EHordeStatus.WITH_LAST_HORDE)
+            {
+                numbersOfHorde++;
+                StartCoroutine(StartHorde(wave.hordes[i++]));
+            }
+            yield return new WaitUntil(() => numbersOfHorde == waitForHorde);
+            print(numbersOfHorde + " " + waitForHorde);
         }
         waveIndex++;
         if (waveIndex >= waves.Count && isLoop) waveIndex = 0;
@@ -39,6 +50,7 @@ public class LevelManager : Singleton<LevelManager>
     }
     private IEnumerator StartHorde(Horde horde)
     {
+        yield return new WaitForSeconds(horde.hordeCountdown);
         for (int i = 0; i < horde.count; i++)
         {
             NavMeshHit closestHit;
@@ -51,6 +63,7 @@ public class LevelManager : Singleton<LevelManager>
             enemies.Add(enemy);
             yield return new WaitForSeconds(horde.spawnInterval);
         }
+        waitForHorde++;
     }
     public void SetSelectedTower(TowerHologram hologram)
     {
@@ -72,7 +85,7 @@ public class LevelManager : Singleton<LevelManager>
     {
         lives -= live;
         GameUI.Instance.SetLives(Math.Max(lives, 0));
-        if (lives <= 0) GameManager.Instance.GameOver();
+        if (lives <= 0) GameManager.Instance.onGameOver.Invoke();
     }
     public void IncreaseMoney(int mon)
     {
@@ -116,6 +129,7 @@ public class LevelManager : Singleton<LevelManager>
         lives = data.Lives;
         money = data.Money;
         waveIndex = data.WaveIndex;
+        GameUI.Instance.SetWave(waveIndex + 1);
 
         GameUI.Instance.SetLives(lives);
         GameUI.Instance.SetMoney(money);

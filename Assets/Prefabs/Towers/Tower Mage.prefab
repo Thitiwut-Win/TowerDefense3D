@@ -154,7 +154,7 @@ MonoBehaviour:
     health: 12
     range: 5
     attackSpeed: 0.4
-    attackDamage: 3
+    attackDamage: 2.5
     cost: 200
     eTeam: 1
   rotateToTarget: {fileID: 4802870667531033722}

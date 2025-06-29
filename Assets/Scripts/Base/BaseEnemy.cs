@@ -7,7 +7,7 @@ using UnityEngine.AI;
 
 public class BaseEnemy : BaseUnit
 {
-    [SerializeField] private NavMeshAgent agent;
+    [SerializeField] protected NavMeshAgent agent;
     [SerializeField] private Animator animator;
     private EnemyWaypoints enemyWaypoints;
     private float offset = 0.1f;
@@ -40,7 +40,7 @@ public class BaseEnemy : BaseUnit
         attackCD.time = 1f / stat.attackSpeed;
         audioSource = GetComponent<AudioSource>();
     }
-    void Update()
+    protected virtual void Update()
     {
         if (audioSource.clip != null && audioSource.time > 2.1f) audioSource.Stop();
         if (enemyState == EnemyState.WALKING)

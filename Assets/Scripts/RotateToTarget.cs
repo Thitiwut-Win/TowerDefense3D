@@ -35,7 +35,7 @@ public class RotateToTarget : MonoBehaviour
         }
         return target != null;
     }
-    public void Attack(Projectile prefab)
+    public void Attack(Projectile prefab, float volumeMod = 1)
     {
         if (hasTarget())
         {
@@ -45,7 +45,7 @@ public class RotateToTarget : MonoBehaviour
                 projectile.SetTarget(target.transform);
                 projectile.PostSpawn();
             }
-            audioSource.volume = GameManager.Instance.GetVolume()/100f;
+            audioSource.volume = GameManager.Instance.GetVolume()/100f * volumeMod;
             audioSource.clip = audioClip;
             audioSource.pitch = Random.Range(1f, 3f);
             audioSource.Play();

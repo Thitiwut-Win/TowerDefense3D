@@ -10,7 +10,7 @@ public class MageTower : BaseTower
         {
             isAttacking = true;
             PoolManager.Instance.Spawn<Particle>(particle.name, targetList[0].transform.position, Quaternion.identity);
-            rotateToTarget.Attack(null);
+            rotateToTarget.Attack(null, 0.25f);
             StartCoroutine(AttackCountdown());
         }
     }

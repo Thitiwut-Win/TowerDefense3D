@@ -18,4 +18,5 @@ public class Horde
     public float spawnInterval;
     public float hordeCountdown;
     public int pathNumber;
+    public EHordeStatus eHordeStatus;
 }

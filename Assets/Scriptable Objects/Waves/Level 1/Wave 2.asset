@@ -18,9 +18,17 @@ MonoBehaviour:
     spawnInterval: 3
     hordeCountdown: 3
     pathNumber: 0
+    eHordeStatus: 0
+  - enemyPrefab: {fileID: 8571952077867546127, guid: a7ce61b2925c3a948964e31f5e5bd85e, type: 3}
+    count: 3
+    spawnInterval: 3
+    hordeCountdown: 4
+    pathNumber: 0
+    eHordeStatus: 0
   - enemyPrefab: {fileID: 3396897592966564377, guid: d67b3f384fa7e7849b02db8f7b7abea6, type: 3}
     count: 2
     spawnInterval: 5
     hordeCountdown: 3
     pathNumber: 1
+    eHordeStatus: 0
   waveCountdown: 0

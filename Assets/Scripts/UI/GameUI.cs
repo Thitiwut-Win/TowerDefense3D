@@ -6,6 +6,7 @@ public class GameUI : Singleton<GameUI>
 {
     [SerializeField] private TextMeshProUGUI livesText;
     [SerializeField] private TextMeshProUGUI moneyText;
+    [SerializeField] private TextMeshProUGUI waveText;
     [SerializeField] private Button callWaveButton;
     void Start()
     {
@@ -20,6 +21,10 @@ public class GameUI : Singleton<GameUI>
     public void SetMoney(int money)
     {
         moneyText.SetText(money.ToString());
+    }
+    public void SetWave(int wave)
+    {
+        waveText.SetText("Wave : " + wave.ToString());
     }
     private void OnCallWave()
     {

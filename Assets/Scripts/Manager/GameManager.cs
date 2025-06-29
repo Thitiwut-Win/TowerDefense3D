@@ -1,4 +1,7 @@
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -28,9 +31,12 @@ public class GameManager : Singleton<GameManager>
     {
         return volume;
     }
-    public void GameOver()
+    [SerializeField]
+    private UnityEvent _gameOver;
+    public UnityEvent onGameOver
     {
-        
+        get { return _gameOver; }
+        set { _gameOver = value; }
     }
     public void Save()
     {
@@ -44,6 +50,10 @@ public class GameManager : Singleton<GameManager>
     public void Load()
     {
         SaveSystem.Load();
+    }
+    public void Restart()
+    {
+        SceneManager.LoadScene("SampleScene");
     }
     public void Exit()
     {
