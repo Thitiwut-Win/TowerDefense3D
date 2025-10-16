@@ -6,7 +6,7 @@ public class Player : Singleton<Player>
     [SerializeField] private Animator animator;
     [SerializeField] private CharacterController controller;
     private Vector3 velocity;
-    private float gravityValue = -9.81f;
+    private float gravityValue = -4.9f;
     public float moveSpeed;
     public float jumpSpeed;
     public float rotationSpeed;
@@ -32,7 +32,7 @@ public class Player : Singleton<Player>
         }
         if (transform.position.y < -2)
         {
-            transform.position = new Vector3(30, 2, 6);
+            transform.position = new Vector3(30, 1.2f, 8);
         }
         SetAnimatorParameter();
     }

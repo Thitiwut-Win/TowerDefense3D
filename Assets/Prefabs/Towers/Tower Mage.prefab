@@ -152,10 +152,10 @@ MonoBehaviour:
     prefab: {fileID: 0}
     maxHealth: 12
     health: 12
-    range: 5
+    range: 4
     attackSpeed: 0.4
     attackDamage: 2.5
-    cost: 200
+    cost: 250
     eTeam: 1
   rotateToTarget: {fileID: 4802870667531033722}
   targetList: []

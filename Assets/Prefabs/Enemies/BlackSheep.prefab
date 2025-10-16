@@ -4906,7 +4906,7 @@ MonoBehaviour:
     aggroRange: 0
     moveSpeed: 0
     armor: 0
-    money: 20
+    money: 30
     lives: 1
     dazeTime: 0
     eTeam: 2

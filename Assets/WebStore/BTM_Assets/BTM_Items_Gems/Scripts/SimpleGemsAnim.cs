@@ -9,7 +9,9 @@ namespace Benjathemaker
         public bool rotateX = false;
         public bool rotateY = false;
         public bool rotateZ = false;
-        public float rotationSpeed = 90f; // Degrees per second
+        public float rotationSpeedX = 90f; // Degrees per second
+        public float rotationSpeedY = 90f; // Degrees per second
+        public float rotationSpeedZ = 90f; // Degrees per second
 
         public bool isFloating = false;
         public bool useEasingForFloating = false; // Separate toggle for floating ease
@@ -42,11 +44,11 @@ namespace Benjathemaker
             if (isRotating)
             {
                 Vector3 rotationVector = new Vector3(
-                    rotateX ? 1 : 0,
-                    rotateY ? 1 : 0,
-                    rotateZ ? 1 : 0
+                    rotateX ? rotationSpeedX : 0,
+                    rotateY ? rotationSpeedY : 0,
+                    rotateZ ? rotationSpeedZ : 0
                 );
-                transform.Rotate(rotationVector * rotationSpeed * Time.deltaTime);
+                transform.Rotate(rotationVector * Time.deltaTime);
             }
 
             if (isFloating)

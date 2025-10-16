@@ -6,7 +6,6 @@ public class ThirdPersonCamera : Singleton<ThirdPersonCamera>
     new Camera camera;
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private Transform aimTarget;
-    private bool isSelecting = false;
     private bool isBuilding = false;
     private TowerHologram hologram;
     private BuildUI buildUI;
@@ -26,30 +25,18 @@ public class ThirdPersonCamera : Singleton<ThirdPersonCamera>
         Vector3 direc = mousePos - transform.position;
         if (Input.GetKeyDown(KeyCode.P))
         {
-            isSelecting = !isSelecting;
-            if (isSelecting)
-            {
-                if (buildUI == null) buildUI = BuildUI.Instance;
-                buildUI.gameObject.SetActive(true);
-            }
-            else
-            {
-                if (buildUI == null) buildUI = BuildUI.Instance;
-                buildUI.gameObject.SetActive(false);
-            }
+            if (isBuilding) ExitBuildMode();
+            GameManager.Instance.Pause();
+            if (buildUI == null) buildUI = BuildUI.Instance;
+            buildUI.gameObject.SetActive(true);
         }
-        if (!isBuilding && Input.GetKeyDown(KeyCode.B))
-            {
-                isBuilding = true;
-                hologram = Instantiate(LevelManager.Instance.GetSelectedTower(), transform.position, Quaternion.identity);
-                TowerHologram.onComplete += OnBuildComplete;
-            }
+        if (!isBuilding && !GameManager.Instance.IsPausing() && Input.GetKeyDown(KeyCode.B))
+        {
+            EnterBuildMode();
+        }
         if (isBuilding && Input.GetKeyDown(KeyCode.Escape))
         {
-            isBuilding = false;
-            hologram.Cancel();
-            hologram = null;
-            TowerHologram.onComplete -= OnBuildComplete;
+            ExitBuildMode();
         }
         RaycastHit raycastHit;
         if (Physics.Raycast(transform.position, direc, out raycastHit, Mathf.Infinity, layerMask))
@@ -65,6 +52,19 @@ public class ThirdPersonCamera : Singleton<ThirdPersonCamera>
                 }
             }
         }
+    }
+    private void EnterBuildMode()
+    {
+        isBuilding = true;
+        hologram = Instantiate(LevelManager.Instance.GetSelectedTower(), transform.position, Quaternion.identity);
+        TowerHologram.onComplete += OnBuildComplete;
+    }
+    private void ExitBuildMode()
+    {
+        isBuilding = false;
+        hologram.Cancel();
+        hologram = null;
+        TowerHologram.onComplete -= OnBuildComplete;
     }
     private void OnBuildComplete(bool valid)
     {

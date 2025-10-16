@@ -7,7 +7,7 @@ public class TowerRange : MonoBehaviour
     public void OnTriggerEnter(Collider collider)
     {
         Vector3 direc = transform.position - collider.transform.position;
-        if (collider.TryGetComponent(out BaseEnemy baseEnemy))
+        if (collider.TryGetComponent(out BaseEnemy baseEnemy) && baseEnemy.stat.eTeam != baseTower.towerStat.eTeam)
         {
             if (!Physics.Raycast(baseTower.rotateToTarget.transform.position, direc, baseTower.towerStat.range, layerMask))
             {
@@ -18,7 +18,7 @@ public class TowerRange : MonoBehaviour
     }
     public void OnTriggerStay(Collider collider)
     {
-        if (collider.TryGetComponent(out BaseEnemy baseEnemy))
+        if (collider.TryGetComponent(out BaseEnemy baseEnemy) && baseEnemy.stat.eTeam != baseTower.towerStat.eTeam)
         {
             Vector3 direc = collider.transform.position - transform.position;
             direc.y = 0.5f - transform.position.y;
@@ -43,7 +43,7 @@ public class TowerRange : MonoBehaviour
     }
     public void OnTriggerExit(Collider collider)
     {
-        if (collider.TryGetComponent(out BaseEnemy baseEnemy))
+        if (collider.TryGetComponent(out BaseEnemy baseEnemy) && baseEnemy.stat.eTeam != baseTower.towerStat.eTeam)
         {
             if (baseTower.targetList.Contains(baseEnemy))
             {

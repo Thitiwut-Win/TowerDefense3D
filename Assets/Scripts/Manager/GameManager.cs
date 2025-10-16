@@ -1,12 +1,27 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 
 public class GameManager : Singleton<GameManager>
 {
+    [SerializeField] private Camera mainCamera;
+    [SerializeField] private Camera menuCamera;
     private bool isPaused = false;
     private int volume = 100;
+    void Start()
+    {
+        mainCamera.gameObject.SetActive(false);
+    }
+    public void ChangeToMainCamera()
+    {
+        mainCamera.gameObject.SetActive(true);
+        menuCamera.gameObject.SetActive(false);
+    }
+    public void ChnageToMenuCamera()
+    {
+        mainCamera.gameObject.SetActive(false);
+        menuCamera.gameObject.SetActive(true);
+    }
     public void Pause()
     {
         isPaused = !isPaused;

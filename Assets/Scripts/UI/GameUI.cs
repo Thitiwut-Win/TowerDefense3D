@@ -7,12 +7,10 @@ public class GameUI : Singleton<GameUI>
     [SerializeField] private TextMeshProUGUI livesText;
     [SerializeField] private TextMeshProUGUI moneyText;
     [SerializeField] private TextMeshProUGUI waveText;
-    [SerializeField] private Button callWaveButton;
     void Start()
     {
         livesText.SetText(LevelManager.Instance.GetLives().ToString());
         moneyText.SetText(LevelManager.Instance.GetMoney().ToString());
-        callWaveButton.onClick.AddListener(OnCallWave);
     }
     public void SetLives(int lives)
     {
@@ -25,24 +23,5 @@ public class GameUI : Singleton<GameUI>
     public void SetWave(int wave)
     {
         waveText.SetText("Wave : " + wave.ToString());
-    }
-    private void OnCallWave()
-    {
-        if (LevelManager.Instance.IsSpawning())
-        {
-            PopupManager.Instance.Pop("Cannot call next wave while the current wave is spawning.");
-        }
-        else
-        {
-            LevelManager.Instance.CallWave();
-        }
-    }
-    public void EnableCall()
-    {
-        callWaveButton.gameObject.SetActive(true);
-    }
-    public void DisableCall()
-    {
-        callWaveButton.gameObject.SetActive(false);
     }
 }
